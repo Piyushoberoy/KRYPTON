@@ -1,0 +1,8 @@
+pyttsx3
+PyAudio
+selenium
+playsound
+wikipedia
+wolframalpha
+SpeechRecognition
+mysql-connector-python
