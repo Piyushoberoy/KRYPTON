@@ -4,5 +4,6 @@ selenium
 playsound
 wikipedia
 wolframalpha
+opencv-python
 SpeechRecognition
 mysql-connector-python
