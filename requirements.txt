@@ -1,3 +1,4 @@
+dotenv
 pyttsx3
 PyAudio
 selenium
@@ -6,4 +7,13 @@ wikipedia
 wolframalpha
 opencv-python
 SpeechRecognition
+google-generativeai
 mysql-connector-python
+sentence-transformers
+faiss-cpu
+PyPDF2
+python-docx
+python-pptx
+openpyxl
+pyperclip
+pygetwindow
