@@ -3,9 +3,9 @@
 import os
 import json
 import inspect
-import google.generativeai as genai
-from dotenv import load_dotenv
 import localModule
+from dotenv import load_dotenv
+import google.generativeai as genai
 
 # Load the environment variables from the .env file
 load_dotenv()
@@ -32,7 +32,7 @@ def generate_function_descriptions():
             descriptions.append(f"- {name}: {docstring}")
     return "\n".join(descriptions)
         
-def get_ai_interpretation(command: str, context: dict) -> dict:
+def get_ai_interpretation(command: str, context: dict, history: list) -> dict:
     """Sends a command and context to the GenAI model for interpretation."""
 
     # 1. Get the directory where this script (aiGenerator.py) is located
@@ -59,13 +59,16 @@ def get_ai_interpretation(command: str, context: dict) -> dict:
     # 6. Assemble the final prompt
     prompt = prompt_template.format(
         context=context_str,
+        history = history,
         functions=function_list,
         command=command
     )
     
     try:
         response = model.generate_content(prompt)
+        print("Response:", response)
         json_response_str = response.text.strip().replace("```json", "").replace("```", "").strip()
+        print("JsonResponse:", json_response_str)
         return json.loads(json_response_str)
     except Exception as e:
         print(f"An error occurred while calling the AI model: {e}")

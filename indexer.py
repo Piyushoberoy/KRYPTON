@@ -1,16 +1,14 @@
 # indexer.py
 import os
-import psutil
+import docx
 import faiss
 import pickle
-import numpy as np
-from sentence_transformers import SentenceTransformer
-
-# Import handlers for different file types
+import psutil
 import PyPDF2
-import docx
 import openpyxl
+import numpy as np
 from pptx import Presentation
+from sentence_transformers import SentenceTransformer
 
 # --- UPDATED: A much more capable text extraction function ---
 def extract_text_from_file(file_path):

@@ -1,15 +1,16 @@
 # local_module.py
 
 import os
-import subprocess
-import platform
-import psutil # You may need to install this: pip install psutil
 import faiss
+import psutil # You may need to install this: pip install psutil
 import pickle
-from sentence_transformers import SentenceTransformer
+import platform
+import pyperclip # For clipboard access
+import subprocess
 import numpy as np
 import pygetwindow as gw
-import pyperclip # For clipboard access
+from ddgs import DDGS
+from sentence_transformers import SentenceTransformer
 
 # --- Add this new function ---
 def semantic_search(query: str, top_k: int = 5) -> list:
@@ -152,8 +153,7 @@ def open_application(app_name: str) -> str:
             (e.g., 'Notepad', 'Chrome', 'Spotify').
 
     Returns:
-        str: A status message indicating either the successful attempt to
-            open the application or the error that occurred.
+        str: A status message indicating either the successful attempt to open the application or the error that occurred.
     """
     system = platform.system()
     try:
@@ -216,7 +216,20 @@ def get_system_stats() -> dict:
         "cpu_percent": cpu_usage,
         "memory_percent": memory_info.percent
     }
-    
+
+def web_search(query: str) -> str:
+    """Finds real-time information on the web to answer questions or get current data."""
+    print(f"   [Performing web search for: '{query}']")
+    try:
+        with DDGS() as ddgs:
+            # Get the first 3 text results
+            results = [r['body'] for r in ddgs.text(query, max_results=3)]
+        
+        # Join the results into a single string
+        return "\n".join(results) if results else "No results found on the web."
+    except Exception as e:
+        return f"An error occurred during the web search: {e}"
+
 def unknown_command(original_command: str, error: str = "AI did not return a valid command.") -> str:
     """Handles cases where the AI couldn't interpret the command or failed"""
 
